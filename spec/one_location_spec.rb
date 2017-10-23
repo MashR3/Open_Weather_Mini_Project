@@ -19,22 +19,32 @@ describe "weather single location" do
     expect(@api_tests['id']).to be_kind_of(Integer)
   end
 
-  it 'contains the "base" key' do
-    expect(@api_tests).to have_key('base')
+  it 'returns an 8-digit ID' do
+    expect((@api_tests['id']).size).to equal(8)
   end
 
-  context 'Coordinates hash has two keys' do
-    it 'which are longitude and latitude' do
-      expect(@api_tests['coord']).to have_key('lon' && 'lat')
+  context 'has a "base" key which' do
+    it 'is present' do
+      expect(@api_tests).to have_key('base')
+    end
+
+    it 'is a string' do
+      expect((@api_tests)['base']).to be_kind_of(String)
     end
   end
 
-  it 'will only return longitude values within a (+ -)180 range' do
-    expect(@api_tests['coord']['lon']).to be_between(-180, 180)
-  end
+  context 'Coordinates hash has two keys which' do
+    it 'are longitude and latitude' do
+      expect(@api_tests['coord']).to have_key('lon' && 'lat')
+    end
 
-  it 'will only return latitude values within a (+ -)90 range' do
-    expect(@api_tests['coord']['lat']).to be_between(-90, 90)
+    it 'will only return longitude values within a (+ -)180 range' do
+      expect(@api_tests['coord']['lon']).to be_between(-180, 180)
+    end
+
+    it 'will only return latitude values within a (+ -)90 range' do
+      expect(@api_tests['coord']['lat']).to be_between(-90, 90)
+    end
   end
 
   context 'Each weather hash have the four same keys' do
@@ -53,17 +63,18 @@ describe "weather single location" do
      expect(@api_tests['main']['temp_min']).to be_kind_of(Float)
      expect(@api_tests['main']['temp_max']).to be_kind_of(Float)
    end
-  # it 'will return the correct description for the weather id' do
-  #   @api_tests['weather'].each do |i|
-  #
-  #     if i['id'] == 800
-  #       expect i['main'].to be == 'Clear'
-  #
-  #     elsif i['id'] == 711
-  #       expect i['main'].to be == 'Smoke'
-  #     end
-  #   end
-  # end
+
+  it 'will return the correct description for the weather id' do
+    @api_tests['weather'].each do |i|
+
+      if i['id'] == 800
+        expect i['main'].to be == 'Clear'
+
+      elsif i['id'] == 711
+        expect i['main'].to be == 'Smoke'
+      end
+    end
+  end
 
 end
 
