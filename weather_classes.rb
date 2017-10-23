@@ -24,5 +24,5 @@ end
 # weather = WeatherServices.new
 # puts weather.one_location_weather("London")
 
-weather = WeatherServices.new
-puts weather.more_locations_weather("819827","524901")
+# weather = WeatherServices.new
+# puts weather.more_locations_weather("819827","524901")
