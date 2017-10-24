@@ -1,49 +1,13 @@
 #Open Weather Testing
 
-A service allowing the user to request current weather data for a single city by city name or by city name and the country name.
+A service allowing the user to test the services offered by the Open Weather Testing API, by wrapping up the methods in a single class.
 
-## Basics
-
-This product was built using Ruby. Data obtained through the API service was returned in JSON, and parsed into a hash, allowing automated tests to be created with RSpec.
-
-## Usage
-
-### Current Weather Data - Single City  
-
-#### By City name
-
-Calling by city name will make the service respond with a list of results matching the searching word.
-
-Requesting use of the single service requires an API call in the form:
- ```api.openweathermap.org/data/2.5/weather?q={city name}```   
- ```api.openweathermap.org/data/2.5/weather?q={city name},{country code}```
-
- **Note:** The city name and country code are divided by a comma  
- **Note:** Use ISO 3166 country codes
-
-#### By City ID
-
-Calling by city ID will ensure the API responds with an exact result.
-
- Requesting use of the single service requires an API call in the form:
- ```api.openweathermap.org/data/2.5/weather?id=2172797```
-
- where **2172797** is a unique ID corresponding to a specific location.
-
- **Note:** It is recommended to call API by city ID to get an unambiguous result for your city
-
-
-### Current Weather Data - Multiple City
-
- Requesting use of the multiple service requires an API call in the form:
-
-
-
-## Key Information
-
-The Open Weather Map API only allows use if one has an access key, associated with a (free or paid) user account. The creator access key is coded into the get/post requests, but is hidden from view.
-
-To use the 'multiple city' service (where the user inputs up to 20 city IDs), the product must communicate with a known list of city IDs. At present, there are over 21,000 different city IDs. It takes a condiserable amount of time to iterate through this data to check that each city ID input is valid, and then to return an error. Implementing a search bar by city or ID, with a drop down menu would remove the need to test whether the ID is valid.
+## Install
+Run the following commands in your terminal to get the required gem dependencies   
+``` gem install HTTParty```  
+``` gem install yaml ```  
+``` gem install json ```  
+``` gem install rspec ```
 
 ## Technologies Used
 
@@ -52,3 +16,47 @@ To use the 'multiple city' service (where the user inputs up to 20 city IDs), th
 * YAML - 1.2
 * HTTParty - 0.15.6
 * JSON - 2.1.0
+
+## Overview
+
+This product was built using Ruby. A WeatherService class has been built to hold the methods for getting current weather data from the OpenWeatherTesting API. The data is then parsed through JSON to allow the user to create their own automated tests.
+
+## Examples of Usage
+
+An example of the single current weather call:
+
+	def one_location_weather(city)
+	  JSON.parse(self.class.get("/weather?q=#{city}" + "#{@token}").body)
+	end
+
+	context 'Each weather hash have the four same keys' do
+	  it 'contains keys: id, main, description, and icon' do
+	    @api_tests['weather'].each do |i|
+	      expect(i.keys).to contain_exactly('id', 'main', 'description', 'icon')
+	     end
+	    end
+	   end
+In this example, the data is obtained by passing the city name as a string onto the base uri. This can also be achieved using:  
+```api.openweathermap.org/data/2.5/weather?q={city name}```
+```api.openweathermap.org/data/2.5/weather?q={city name},{country code}```  
+*or, with city id:*  
+```api.openweathermap.org/data/2.5/weather?id=2172797```  
+
+An example of the multiple city current weather call  
+
+	def more_locations_weather(location_array)
+	   JSON.parse(self.class.get("/group?id=" + "#{location_array.map{ |id| id }.join(',')}" + "&units=metric" + "#{@token}").body)
+	end
+
+	it 'contains each set of data in a hash' do
+	  expect(@multiple['list'][0]).to be_kind_of(Hash)
+	   expect(@multiple['list'][1]).to be_kind_of(Hash)
+	end
+
+
+
+### Additional Information
+
+The Open Weather Map API only allows use if one has an access key, associated with a (free or paid) user account. The creator access key is coded into the get/post requests, but is hidden from view.
+
+To use the 'multiple city' service (where the user inputs up to 20 city IDs), the product must can be allowed to search a known list of city IDs. At present, there are over 21,000 different city IDs. It would take a lot of time to iterate through this data to check the validity of each city ID.

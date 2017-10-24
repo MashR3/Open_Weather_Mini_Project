@@ -1,7 +1,5 @@
 require 'spec_helper'
 require 'yaml'
-require 'json'
-require 'HTTParty'
 
 # Multiple city weather service tests
 describe "weather multiple locations" do
@@ -23,10 +21,18 @@ describe "weather multiple locations" do
     expect(@multiple['list'].count).to equal(2)
   end
 
+  # Returns multiple data in correct format
   it 'contains each set of data in a hash' do
     expect(@multiple['list'][0]).to be_kind_of(Hash)
+    expect(@multiple['list'][1]).to be_kind_of(Hash)
   end
 
+  it 'contains "country" as a key' do
+    expect(@multiple['list'][0]['sys']).to have_key('country')
+  end
 
+  it 'contains country code as string' do
+    expect(@multiple['list'][0]['sys']['country']).to be_kind_of(String)
+  end
 
 end
