@@ -58,7 +58,7 @@ An example of the multiple city current weather call
 ### Additional Information
 
 The Open Weather Map API only allows use if one has an access key, associated with a (free or paid) user account. The creator access key is coded into the get/post requests, but is hidden from view in a .yml file hidden in .gitignore.  
->To use the service, create a file named 'token.yml' and enter your unique access code in the form "token: {your ID}". 
+>To use the service, create a file named 'token.yml' in the root file and enter your unique access code in the form "token: {your ID}". 
 
 
 To use the 'multiple city' service (where the user inputs up to 20 city IDs), the product must can be allowed to search a known list of city IDs. At present, there are over 21,000 different city IDs. It would take a lot of time to iterate through this data to check the validity of each city ID.
