@@ -2,10 +2,10 @@ require 'json'
 
 json = JSON.parse(File.read('city_list.json'))
 
-@list = json[0]["id"]
+list = json
 
-
-
-json.each do |i|
-  File.write('city_code.yml', "- #{i['id']}")
+File.open("city_code.yml", "w+") do |f|
+  list.each do |i|
+    f << "- #{i['id']} \n"
+  end
 end
