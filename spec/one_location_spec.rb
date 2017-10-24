@@ -1,10 +1,16 @@
 require 'spec_helper'
 
+# Single city weather service tests
 describe "weather single location" do
 
-  before(:each) do
+# before all, instantiate the class in variable 'weather' and the run the tests on the instance variable of running the method on it.
+  before(:all) do
     weather = WeatherServices.new
     @api_tests = weather.one_location_weather('London')
+  end
+
+  it 'will return the weather data as a Hash' do
+    expect(@api_tests).to be_kind_of(Hash)
   end
 
   it 'has the code 200 for a successful https response' do
@@ -33,6 +39,7 @@ describe "weather single location" do
     end
   end
 
+# Checking for correct location parameters
   context 'Coordinates hash has two keys which' do
     it 'are longitude and latitude' do
       expect(@api_tests['coord']).to have_key('lon' && 'lat')
@@ -47,6 +54,7 @@ describe "weather single location" do
     end
   end
 
+# All four keys should be present for every location checked
   context 'Each weather hash have the four same keys' do
      it 'contains keys: id, main, description, and icon' do
        @api_tests['weather'].each do |i|
@@ -64,24 +72,18 @@ describe "weather single location" do
      expect(@api_tests['main']['temp_max']).to be_kind_of(Float)
    end
 
-  it 'will return the correct description for the weather id' do
-    @api_tests['weather'].each do |i|
+# Supposed to have a list of IDs and a corresponding "main" and "icon" key value pair
+  # it 'will return the correct description for the weather id' do
+  #   @api_tests['weather'].each do |i|
+  #
+  #     if i['id'] == 800
+  #       expect i['main'].to be == 'Clear'
+  #
+  #     elsif i['id'] == 711
+  #       expect i['main'].to be == 'Smoke'
+  #     end
+  #   end
+  # end
 
-      if i['id'] == 800
-        expect i['main'].to be == 'Clear'
-
-      elsif i['id'] == 711
-        expect i['main'].to be == 'Smoke'
-      end
-    end
-  end
 
 end
-
-# @json['colors'].each do |i|
-#   expect(i).to have_key('color')
-# end
-
-# OR The more static, non dynamic way ==>
-#   expect @json['colors'][0].keys.include?'color'
-#   expect @json['colors'][1].keys.include?'color'

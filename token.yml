@@ -1,1 +1,4 @@
   token: '&APPID=a04136bdb6ae3db876ec9eb9d65948bc'
+
+# .yml is hidden in the .gitignore file so that no one has access to my personal token code
+# .yml is one big hash file. can use the ':' notation, or write the key:value pair using a dash (-)
