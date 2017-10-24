@@ -72,18 +72,18 @@ describe "weather single location" do
      expect(@api_tests['main']['temp_max']).to be_kind_of(Float)
    end
 
-# Supposed to have a list of IDs and a corresponding "main" and "icon" key value pair
-  # it 'will return the correct description for the weather id' do
-  #   @api_tests['weather'].each do |i|
-  #
-  #     if i['id'] == 800
-  #       expect i['main'].to be == 'Clear'
-  #
-  #     elsif i['id'] == 711
-  #       expect i['main'].to be == 'Smoke'
-  #     end
-  #   end
-  # end
+context 'to have a list of IDs and a corresponding "main" and "icon" key value pair'
+  it 'will return the correct description for the weather id' do
+    @api_tests['weather'].each do |i|
+
+      if i['id'] == 800
+        expect i['main'].to be == 'Clear'
+
+      elsif i['id'] == 711
+        expect i['main'].to be == 'Smoke'
+      end
+    end
+  end
 
 
 end
